@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { HouseService } from '../house.service';
 import { HouseInfo } from '../house';
-import { HouseCard } from "../house-card/house-card";
+import { HouseCard } from '../house-card/house-card';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +10,22 @@ import { HouseCard } from "../house-card/house-card";
   styleUrl: './home.css',
 })
 export class Home {
-    readonly baseUrl = 'https://angular.dev/assets/images/tutorials/common';
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   houseList: HouseInfo[] = [];
   housingService: HouseService = inject(HouseService);
+  filteredHouseList: HouseInfo[] = [];
   constructor() {
     this.houseList = this.housingService.getAllHouses();
+    this.filteredHouseList = this.houseList;
+  }
+
+  filterResults(text: string) {
+    if (!text) {
+      this.filteredHouseList = this.houseList;
+      return;
+    }
+    this.filteredHouseList = this.houseList.filter((house) =>
+      house?.city.toLowerCase().includes(text.toLowerCase()),
+    );
   }
 }
-
