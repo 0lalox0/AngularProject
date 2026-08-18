@@ -15,8 +15,13 @@ export class Home {
   housingService: HouseService = inject(HouseService);
   filteredHouseList: HouseInfo[] = [];
   constructor() {
-    this.houseList = this.housingService.getAllHouses();
-    this.filteredHouseList = this.houseList;
+    this.housingService
+      .getAllHouses()
+      .then((housingLocationList: HouseInfo[]) => {
+        this.houseList = housingLocationList;
+        this.filteredHouseList = housingLocationList;
+        this.changeDetectorRef.markForCheck();
+      });
   }
 
   filterResults(text: string) {

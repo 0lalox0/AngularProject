@@ -1,5 +1,5 @@
-import { Component , inject} from '@angular/core';
-import { FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, ChangeDetectorRef} from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HouseService } from '../house.service';
 import { HouseInfo } from '../house';
@@ -11,23 +11,26 @@ import { HouseInfo } from '../house';
 })
 export class HouseDetails {
   route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   houseService = inject(HouseService);
   house: HouseInfo | undefined;
   applyForm = new FormGroup({
-    firstName: new FormControl(""),
-    lastName: new FormControl(""),
-    email: new FormControl(""),
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    email: new FormControl(''),
   });
   constructor() {
-    const houseId = Number(this.route.snapshot.params["id"]);
-    this.house =
-      this.houseService.getHouseById(houseId);
+    const houseId = Number(this.route.snapshot.params['id']);
+    this.houseService.getHouseById(houseId).then((house) => {
+      this.house = house;
+      this.changeDetectorRef.markForCheck();
+    });
   }
   submitApplication() {
     this.houseService.submitApplication(
-      this.applyForm.value.firstName ?? "",
-      this.applyForm.value.lastName ?? "",
-      this.applyForm.value.email ?? "",
+      this.applyForm.value.firstName ?? '',
+      this.applyForm.value.lastName ?? '',
+      this.applyForm.value.email ?? '',
     );
   }
 }
