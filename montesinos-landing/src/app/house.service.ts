@@ -1,5 +1,7 @@
 import { Service } from '@angular/core';
 import { HouseInfo } from './house';
+import { Apollo } from 'apollo-angular';
+import { gql } from '@apollo/client';
 
 @Service()
 export class HouseService {
