@@ -7,7 +7,7 @@
   ],
   "functions": {
     "api/index.js": {
-      "includeFiles": "dist/montesinos-landing/**"
+      "includeFiles": "**/dist/montesinos-landing/**"
     }
   }
 }
