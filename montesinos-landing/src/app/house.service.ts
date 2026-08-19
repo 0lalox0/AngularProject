@@ -34,9 +34,6 @@ const getHouseById = gql`
 
 @Injectable({ providedIn: 'root' })
 export class HouseService {
-  readonly baseUrl = 'https://angular.dev/assets/images/tutorials/common';
-  protected readonly url = 'http://localhost:3000/locations';
-
   constructor(private apollo: Apollo) {}
 
   async getAllHouses(): Promise<HouseInfo[]> {

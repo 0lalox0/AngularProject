@@ -2,11 +2,13 @@ import { provideApollo } from 'apollo-angular';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { HttpLink } from '@apollo/client/link/http';
 
+const runtimeEnv = (globalThis as any).__ENV__ ?? {};
+const graphqlUri =
+  runtimeEnv.GRAPHQL_URI || 'https://montesinos-backend.onrender.com/graphql';
+
 export const apolloProvider = provideApollo(() => {
-  const urilocal = 'http://localhost:4000/graphql';
-  const urirender = 'https://montesinos-backend.onrender.com/graphql';
   const httpLink = new HttpLink({
-    uri: urirender,
+    uri: graphqlUri,
   });
 
   return new ApolloClient({
