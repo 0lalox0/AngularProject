@@ -21,6 +21,11 @@ export class Home {
         this.houseList = housingLocationList;
         this.filteredHouseList = housingLocationList;
         this.changeDetectorRef.markForCheck();
+      })
+      .catch(() => {
+        this.houseList = [];
+        this.filteredHouseList = [];
+        this.changeDetectorRef.markForCheck();
       });
   }
 

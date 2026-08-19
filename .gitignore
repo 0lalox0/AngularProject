@@ -1,14 +1,19 @@
 # Angular specific
 /dist/
+/montesinos-landing/dist/
 /out-tsc/
+/montesinos-landing/out-tsc/
 /tmp/
 /coverage/
+/montesinos-landing/coverage/
 /e2e/test-output/
 /.angular/
 .angular/
+/montesinos-landing/.angular/
 
 # Node modules and dependency files
 /node_modules/
+/montesinos-landing/node_modules/
 /package-lock.json
 /yarn.lock
 
