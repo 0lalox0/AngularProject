@@ -1,11 +1,25 @@
 const path = require('path');
+const { pathToFileURL } = require('url');
 
-const serverDistPath = path.join(
-  process.cwd(),
-  'dist',
-  'montesinos-landing',
-  'server',
-  'server.mjs',
-);
+let reqHandlerPromise;
 
-module.exports = import(serverDistPath).then((module) => module.reqHandler);
+function getReqHandler() {
+  if (!reqHandlerPromise) {
+    const serverDistPath = path.join(
+      process.cwd(),
+      'dist',
+      'montesinos-landing',
+      'server',
+      'server.mjs',
+    );
+    reqHandlerPromise = import(pathToFileURL(serverDistPath).href).then(
+      (module) => module.reqHandler,
+    );
+  }
+  return reqHandlerPromise;
+}
+
+module.exports = async (req, res) => {
+  const reqHandler = await getReqHandler();
+  return reqHandler(req, res);
+};
